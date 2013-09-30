@@ -40,6 +40,22 @@ Plot = (function ($) {
     function nome(d) { return space_to_underline(d.nome); } // name from original json
     function numero(d) { return d.numero; } // new parameter to json
 
+    function colore_legenda(partidos) {
+        function getContrastYIQ(hexcolor){
+            //Ref: http://24ways.org/2010/calculating-color-contrast/ 
+            var r = parseInt(hexcolor.substr(0,2),16);
+            var g = parseInt(hexcolor.substr(2,2),16);
+            var b = parseInt(hexcolor.substr(4,2),16);
+            var yiq = ((r*299)+(g*587)+(b*114))/1141000;
+            return (yiq >= 128) ? 'black' : 'white';
+        }
+
+        for (partido in partidos) {
+            $("#list_cor_"+partidos[partido].numero).css('background-color', partidos[partido].cor);
+            $("#list_cor_"+partidos[partido].numero).css('color', getContrastYIQ(partidos[partido].cor));
+        }
+    }
+
     //Create Gradient Fill for each circle
     function gradiente(svg,id,color) {
         if (color === "#000000") color = "#1F77B4";
@@ -90,6 +106,7 @@ Plot = (function ($) {
     function _plot_data(dados) {
         // Inicialmente remove o spinner de loading
         $("#loading").remove();
+        colore_legenda(dados.partidos);
 
         // Create the SVG container and set the origin.
         var svg_base = d3.select("#animacao").append("svg")
