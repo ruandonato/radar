@@ -60,7 +60,7 @@
                 <!-- <option value="MES">Mês</option> Issue #193 -->
             </select>
             </p>
-            
+
             <p><label for="palavras_chave">Filtrar votações por temas:</label>
             Separe as palavras-chaves por vírgula.<br>
             <input type="text" id="palavras_chave" name ="palavras_chave" size="30" placeholder="saúde, educação">
@@ -74,22 +74,19 @@
             -->
             </p>
             <input type="submit" value="Buscar">
-        </form> 
+        </form>
 
+        <label class="leftLabel" style="float: left;"></label>
 
+        <div style="float: left; margin-right: 2%; margin-left: 2%" class="nstSlider"
+             data-range_min="2005" data-range_max="2016" data-cur_min="2005"    data-cur_max="2016">
 
-<div class="nstSlider" data-range_min="-10" data-range_max="100" 
-                       data-cur_min="20"    data-cur_max="80">
+        <div class="bar"></div>
+        <div class="leftGrip"></div>
+        <div class="rightGrip"></div>
+        </div>
 
-    <div class="bar"></div>
-    <div class="leftGrip"></div>
-    <div class="rightGrip"></div>
-</div>
-<div class="leftLabel" />
-<div class="rightLabel" />
-
-
-
+        <label class="rightLabel"></label>
 
         <!-- Popup windows content -->
         <div id="popup-content">
@@ -100,12 +97,12 @@
                 	<img id="expandido" src="/static/assets/expandido.png">
 					<input id="modal-close-button" type="button" value="OK! ENTENDI"/>
 				</div>
-                
+
             </div>
         </div>
 
         <!-- Overlay background -->
-        <div = id="overlay-bg"></div>
+        <div id="overlay-bg"></div>
 
         <!-- end popup windows content -->
 
@@ -116,7 +113,7 @@
             </ul>
         </aside>
         <div style="width:700px" id="graficopca">
-        <figure id="animacao"><center><img id="loading" src="/static/files/images/spinner.gif"></img></center></figure>
+        <figure id="animacao"><center><img id="loading" src="/static/files/images/spinner.gif"/></center></figure>
         </div>
         <aside id="como-funciona" style="margin: 0 90px 10px 20px; padding: 10px; background-color: rgba(220,220,220,0.7); -webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px;">
             <h4>Entenda o gráfico</h4>
@@ -143,25 +140,18 @@
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="/static/files/codes/js/jquery.nstSlider.min.js"></script>
 
-        <!-- 5. setup the slider! -->
         <script>
-                $('.nstSlider').nstSlider({
-        "crossable_handles": false,
-        "left_grip_selector": ".leftGrip",
-        "right_grip_selector": ".rightGrip",
-        "value_bar_selector": ".bar",
-        "value_changed_callback": function(cause, leftValue, rightValue) {
-            $(this).parent().find('.leftLabel').text(leftValue);
-            $(this).parent().find('.rightLabel').text(rightValue);
-        }
-    });
-
-            // // Call methods and such...
-            // var highlightMin = Math.random() * 20,
-            //     highlightMax = highlightMin + Math.random() * 80;
-            // $('.nstSlider').nstSlider('highlight_range', highlightMin, highlightMax);
+            $('.nstSlider').nstSlider({
+                "crossable_handles": false,
+                "left_grip_selector": ".leftGrip",
+                "right_grip_selector": ".rightGrip",
+                "value_bar_selector": ".bar",
+                "value_changed_callback": function(cause, periodoInicial, periodoFinal) {
+                    $(this).parent().find('.leftLabel').text(periodoInicial);
+                    $(this).parent().find('.rightLabel').text(periodoFinal);
+                }
+            });
         </script>
-
     {% else %}
         <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.1/d3.v3.min.js"></script>
         <script src="/static/files/codes/js/d3-tip.js"></script>
