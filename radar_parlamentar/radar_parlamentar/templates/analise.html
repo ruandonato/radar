@@ -76,6 +76,21 @@
             <input type="submit" value="Buscar">
         </form> 
 
+
+
+<div class="nstSlider" data-range_min="-10" data-range_max="100" 
+                       data-cur_min="20"    data-cur_max="80">
+
+    <div class="bar"></div>
+    <div class="leftGrip"></div>
+    <div class="rightGrip"></div>
+</div>
+<div class="leftLabel" />
+<div class="rightLabel" />
+
+
+
+
         <!-- Popup windows content -->
         <div id="popup-content">
             <div class="row">
@@ -124,6 +139,29 @@
     {% if request.get_host == '127.0.0.1:8000' or request.get_host == 'localhost:8000' %}
         <script src="/static/files/codes/js/d3.min.js"></script>
         <script src="/static/files/codes/js/d3-tip.js"></script>
+        <link type="text/css" rel="stylesheet" href="/static/files/codes/css/jquery.nstSlider.min.css">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="/static/files/codes/js/jquery.nstSlider.min.js"></script>
+
+        <!-- 5. setup the slider! -->
+        <script>
+                $('.nstSlider').nstSlider({
+        "crossable_handles": false,
+        "left_grip_selector": ".leftGrip",
+        "right_grip_selector": ".rightGrip",
+        "value_bar_selector": ".bar",
+        "value_changed_callback": function(cause, leftValue, rightValue) {
+            $(this).parent().find('.leftLabel').text(leftValue);
+            $(this).parent().find('.rightLabel').text(rightValue);
+        }
+    });
+
+            // // Call methods and such...
+            // var highlightMin = Math.random() * 20,
+            //     highlightMax = highlightMin + Math.random() * 80;
+            // $('.nstSlider').nstSlider('highlight_range', highlightMin, highlightMax);
+        </script>
+
     {% else %}
         <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.1/d3.v3.min.js"></script>
         <script src="/static/files/codes/js/d3-tip.js"></script>
