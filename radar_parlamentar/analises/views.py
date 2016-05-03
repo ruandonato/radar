@@ -54,6 +54,8 @@ def analise(request, nome_curto_casa_legislativa):
         nome_parlamentar = ""
 
     num_votacao = casa_legislativa.num_votacao()
+    ano_inicial = casa_legislativa.ano_inicial()
+    ano_final = casa_legislativa.ano_final()
 
     return render_to_response(
         'analise.html',
@@ -62,6 +64,8 @@ def analise(request, nome_curto_casa_legislativa):
          'num_votacao': num_votacao,
          'periodicidade': periodicidade,
          'palavras_chave': palavras_chave,
+         'ano_inicial': ano_inicial,
+         'ano_final': ano_final,
          'nome_parlamentar': nome_parlamentar},
         context_instance=RequestContext(request)
     )
