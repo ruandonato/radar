@@ -228,15 +228,15 @@ class CasaLegislativa(models.Model):
 
     def ano_inicial(self):
         ano_inicial_minimo = self.ano_final()
-        datas = Votacao.objects.all()
+        datas = Votacao.objects.filter(proposicao__casa_legislativa=self)
         for data in datas:
-            if(data.data.year < ano_inicial_minimo):
+            if data.data.year < ano_inicial_minimo:
                 ano_inicial_minimo = data.data.year
         return ano_inicial_minimo
 
     def ano_final(self):
         ano_final_maximo = 0
-        datas = Votacao.objects.all()
+        datas = Votacao.objects.filter(proposicao__casa_legislativa=self)
         for data in datas:
             if data.data.year > ano_final_maximo:
                 ano_final_maximo = data.data.year
