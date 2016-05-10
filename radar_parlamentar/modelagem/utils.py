@@ -23,6 +23,7 @@ from models import SEMESTRE, ANO, BIENIO, QUADRIENIO
 from models import Votacao, PeriodoCasaLegislativa
 import datetime
 import logging
+from django.utils.dateparse import parse_date
 
 logger = logging.getLogger("radar")
 
@@ -53,6 +54,8 @@ class MandatoLists:
             date_ini_mandato = datetime.date(y, 1, 1)
             mandatos.append(date_ini_mandato)
             y += 4
+        logger.info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        logger.info(str(mandatos))
         return mandatos
 
 
@@ -84,12 +87,14 @@ class PeriodosRetriever:
     """
 
     def __init__(self, casa_legislativa, periodicidade,
-                 data_da_primeira_votacao=None, data_da_ultima_votacao=None,
+                 parametro_data_inicial=None, parametro_data_final=None,
                  numero_minimo_de_votacoes=1):
         self.casa_legislativa = casa_legislativa
         self.periodicidade = periodicidade
-        self.data_da_primeira_votacao = data_da_primeira_votacao
-        self.data_da_ultima_votacao = data_da_ultima_votacao
+        self.parametro_data_inicial = parametro_data_inicial
+        self.parametro_data_final = parametro_data_final
+        self.data_da_primeira_votacao = None
+        self.data_da_ultima_votacao = None
         self.numero_minimo_de_votacoes = numero_minimo_de_votacoes
 
     def get_periodos(self):
@@ -102,6 +107,10 @@ class PeriodosRetriever:
 
             self.data_da_primeira_votacao = min(votacao_datas)
             self.data_da_ultima_votacao = max(votacao_datas)
+
+        logger.info('#############   PARAMETROS    ################')
+        logger.info(str(self.parametro_data_inicial))
+        logger.info(str(self.parametro_data_final))
 
         data_inicial = self._inicio_primeiro_periodo()
         periodos_candidatos = []
@@ -147,7 +156,7 @@ class PeriodosRetriever:
         mandatos = mandatos_lists.get_mandatos(
             esfera, self.data_da_primeira_votacao, self.data_da_ultima_votacao)
         i = 0
-        while i < len(mandatos) and mandatos[i] < self.data_da_primeira_votacao:
+        while i < len(mandatos) and mandatos[i] <= self.parametro_data_inicial:
             ano_inicial = mandatos[i].year
             i += 1
         inicio_primeiro_periodo = datetime.date(
