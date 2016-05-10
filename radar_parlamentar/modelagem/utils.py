@@ -54,8 +54,6 @@ class MandatoLists:
             date_ini_mandato = datetime.date(y, 1, 1)
             mandatos.append(date_ini_mandato)
             y += 4
-        logger.info('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        logger.info(str(mandatos))
         return mandatos
 
 
@@ -108,9 +106,9 @@ class PeriodosRetriever:
             self.data_da_primeira_votacao = min(votacao_datas)
             self.data_da_ultima_votacao = max(votacao_datas)
 
-        logger.info('#############   PARAMETROS    ################')
-        logger.info(str(self.parametro_data_inicial))
-        logger.info(str(self.parametro_data_final))
+            if self.parametro_data_inicial is None:
+                self.parametro_data_inicial = self.data_da_primeira_votacao
+                self.parametro_data_final = self.data_da_ultima_votacao
 
         data_inicial = self._inicio_primeiro_periodo()
         periodos_candidatos = []
